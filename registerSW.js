@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/bbva-exercise/sw.js', { scope: '/bbva-exercise/' })})}
