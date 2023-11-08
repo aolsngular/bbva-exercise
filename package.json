@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "vite --host",
+    "start": "vite --host 0.0.0.0",
     "build": "vite build --emptyOutDir",
     "preview": "sudo vite preview --port 80",
     "lint": "eslint ./src"
@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@web/dev-server": "^0.4.0",
-    "lit": "^3.0.2"
+    "lit": "^3.0.2",
+    "lit-element-router": "^2.0.3"
   },
   "devDependencies": {
     "eslint": "^8.39.0",
