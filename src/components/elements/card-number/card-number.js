@@ -37,6 +37,12 @@ class CardNumber extends LitElement {
             if ('vibrate' in navigator) {
                 navigator.vibrate(200);
             }
+            let event = new CustomEvent('card-revealed', {
+                detail: { number: this.number },
+                bubbles: true,
+                composed: true
+            });
+            this.dispatchEvent(event);
         }
     }
     render() {

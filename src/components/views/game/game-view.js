@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import '../../elements/card-number/card-number.js';
-
+import { LEVELS } from '../../constants/levels.js'
 class GameView extends LitElement {
   static get properties() {
     return {
@@ -15,9 +15,26 @@ class GameView extends LitElement {
     super();
     this.numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     this.number = Math.floor(Math.random() * 9) + 1;
-    this.level = 'low';
+    console.log(LEVELS);
+    this.level = LEVELS['hight'].type;
     this.points = 0;
     this.shuffle();
+    this.addEventListener('card-revealed', this.handleCardRevealed);
+
+  }
+  handleCardRevealed(e) {
+    const revealedNumber = Number(e.detail.number);
+
+    if (revealedNumber === this.number) {
+      this.points += this.generatePoint(this.level);
+      this.number = Math.floor(Math.random() * 9) + 1;
+      this.shuffle();
+      this.requestUpdate();
+    }
+
+  }
+  generatePoint(level) {
+    return LEVELS[level].points;
   }
   static styles = css`
     .container-game{
