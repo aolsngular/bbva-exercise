@@ -43,6 +43,16 @@ class HomeView extends LitElement {
       button:hover {
         background-color: #0056b3;
       }
+      .icon-login{
+        display: block;
+        width: 20px; 
+        height: 20px; 
+        background-image: url(/bbva-exercise/icons/computer-mouse-solid.svg);
+        background-size: contain; 
+        background-repeat: no-repeat;
+        margin: 0 auto;
+        margin-bottom: 20px; 
+      }
     `;
   constructor() {
     super();
@@ -62,8 +72,7 @@ class HomeView extends LitElement {
   render() {
     return html`
         <div class="form">
-            <i class="fas fa-user"></i>
-            <i class="fa-solid fa-computer-mouse"></i>
+            <span class="icon-login"></span>
             <form id="register-form" @submit="${this.handleStartGame}">
                 <label>Name</label>
                 <input type="text" .value="${this.userName}" @input="${this.handleInput}" placeholder="Enter your name" required />

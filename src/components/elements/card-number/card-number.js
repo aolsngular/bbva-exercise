@@ -4,7 +4,8 @@ class CardNumber extends LitElement {
     static properties = {
         number: Number,
         hide: Boolean,
-        isCorrect: Boolean
+        isCorrect: Boolean,
+        duration: Number
     };
     static styles = css`
         .card-number{
@@ -34,9 +35,10 @@ class CardNumber extends LitElement {
     constructor() {
         super();
         this.number = 0;
+        this.duration = 10000;
         this.hide = false;
         this.isCorrect = null;
-        setTimeout(() => this.hideCard(), 2000);
+        setTimeout(() => this.hideCard(), (this.duration));
     }
     revealCard() {
         this.hide = !this.hide;
@@ -47,10 +49,6 @@ class CardNumber extends LitElement {
             }
         }
     }
-    restartCard() {
-        this.hide = false;
-        this.isCorrect = null;
-    }
     showCard() {
         this.hide = false;
         this.isCorrect = null;
@@ -60,6 +58,7 @@ class CardNumber extends LitElement {
         this.isCorrect = null;
         this.requestUpdate();
     }
+
     render() {
         return html`
           <div class="card-number ${this.hide ? 'hide' : ''} ${this.isCorrect !== null ? (this.isCorrect ? 'correct' : 'incorrect') : ''}">

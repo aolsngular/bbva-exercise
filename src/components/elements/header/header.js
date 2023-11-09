@@ -26,7 +26,7 @@ class HeaderUser extends LitElement {
             display: flex;
             flex-direction: row;
             justify-content: left;
-            width: 40%;
+            width: 35%;
             align-items: center;
             text-transform: capitalize;
             margin: 0 20px;
@@ -43,6 +43,7 @@ class HeaderUser extends LitElement {
         select{
             border: none;
             color: #fff;
+            font-size: 16px;
         }
     `;
     constructor() {
@@ -50,7 +51,15 @@ class HeaderUser extends LitElement {
         this.userName = "User";
         this.levels = Object.values(LEVELS);
         this.color = "#007bff";
-        console.log(this.levels);
+    }
+    handleDurationChange(e) {
+        const selectedDuration = e.target.value;
+        const levelType = e.target.options[e.target.selectedIndex].dataset.levelType;
+        this.dispatchEvent(new CustomEvent('duration-change', {
+            detail: { duration: selectedDuration, level: levelType },
+            bubbles: true,
+            composed: true
+        }));
     }
     render() {
         return html`
@@ -58,9 +67,9 @@ class HeaderUser extends LitElement {
             <div class="header-user"> <span class="header-user-icon"></span>${this.userName}</div>
             <div class="header-level">
                 <span>Level: </span>
-                <select name="level" id="level" style="background-color: ${this.color}">
+                <select name="level" id="level" style="background-color: ${this.color}" @change="${this.handleDurationChange}"s>
                 ${Object.values(this.levels).map((level) => html`
-                <option value="${level.type}">${level.type}</option>
+                    <option value="${level.time}" data-level-type="${level.type}">${level.type}</option>
                 `)}
                 </select>
             </div>

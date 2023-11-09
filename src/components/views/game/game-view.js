@@ -11,24 +11,37 @@ class GameView extends LitElement {
       level: { type: String },
       points: { type: Number },
       startGame: { type: Boolean },
+      hideCardsDuration: { type: Number },
     };
   }
   constructor() {
     super();
     this.numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     this.number = Math.floor(Math.random() * 9) + 1;
-    this.level = LEVELS['hight'].type;
+    this.level = LEVELS['low'].type;
     this.points = 0;
     this.startGame = false;
     this.gameMessage = 'Click the play button to start a new game';
+    this.hideCardsDuration = LEVELS['low'].time;
+    this.addEventListener('duration-change', this.updateDuration.bind(this));
+
   }
   startGameHandler() {
     this.startGame = true;
     this.gameMessage = 'Memorize the cards!';
     this.shuffle();
     this.number = Math.floor(Math.random() * 9) + 1;
-    setTimeout(() => this.hideCards(), 2000);
+    setTimeout(() => this.hideCards(), this.hideCardsDuration);
   }
+
+  showAllCards() {
+    const cards = this.shadowRoot.querySelectorAll('card-number');
+    cards.forEach(card => {
+      card.showCard();
+    });
+    this.requestUpdate();
+  }
+
   hideCards() {
     const cards = this.shadowRoot.querySelectorAll('card-number');
     cards.forEach(card => {
@@ -37,13 +50,7 @@ class GameView extends LitElement {
     this.gameMessage = `Where is the number ${this.number}?`;
     this.requestUpdate();
   }
-  showAllCards() {
-    const cards = this.shadowRoot.querySelectorAll('card-number');
-    cards.forEach(card => {
-      card.showCard();
-    });
-    this.requestUpdate();
-  }
+
   cardClicked(e) {
     const cardComponent = e.target;
     const revealedNumber = cardComponent.number;
@@ -63,7 +70,10 @@ class GameView extends LitElement {
   generatePoint(level) {
     return LEVELS[level].points;
   }
-
+  updateDuration(e) {
+    this.hideCardsDuration = Number(e.detail.duration);
+    this.level = e.detail.level;
+  }
   static styles = css`
     .game-container, .game-action{
       display: flex;
@@ -106,6 +116,9 @@ class GameView extends LitElement {
   shuffle() {
     this.numbers.sort(() => Math.random() - 0.5);
   }
+  handleDurationChange(e) {
+    this.hideCardsDuration = e.target.value;
+  }
   render() {
     return html`
       <header-user .userName="${this.username}" .level="${this.level}" .color="#fff"></header-user>
@@ -123,7 +136,7 @@ class GameView extends LitElement {
       <div class="game-message"><b>${this.gameMessage}</B></div>
         <div class="game-container">
           ${this.numbers.map((number) => html`
-            <card-number .number="${number}" @click="${this.cardClicked}" ></card-number>
+            <card-number .number="${number}" .duration="${this.hideCardsDuration}" @click="${this.cardClicked}" ></card-number>
           `)}
         </div>
       ` : ''}

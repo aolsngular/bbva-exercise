@@ -1,17 +1,17 @@
 export const LEVELS = {
     "low": {
         type: "low",
-        time: 10,
+        time: 10000,
         points: 10
     },
     "medium": {
         type: "medium",
-        time: 5,
+        time: 5000,
         points: 20
     },
     "hight": {
         type: "hight",
-        time: 2,
+        time: 2000,
         points: 30
     },
 }
