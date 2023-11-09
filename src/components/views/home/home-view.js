@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit';
 
 class HomeView extends LitElement {
-    static properties = {
-        userName: { type: String }
-    };
-    static styles = css`
+  static properties = {
+    userName: { type: String }
+  };
+  static styles = css`
        .form {
         width: 80%; 
         max-width: 400px;
@@ -44,24 +44,26 @@ class HomeView extends LitElement {
         background-color: #0056b3;
       }
     `;
-    constructor() {
-        super();
-        this.userName = '';
+  constructor() {
+    super();
+    this.userName = '';
+  }
+  handleInput(e) {
+    this.userName = e.target.value;
+  }
+  handleStartGame() {
+    const username = this.userName.trim();
+    if (username.trim()) {
+      this.dispatchEvent(new CustomEvent('start-game', { detail: username }));
+    } else {
+      alert('Por favor, introduce tu nombre.');
     }
-    handleInput(e) {
-        this.userName = e.target.value;
-    }
-    handleStartGame() {
-        const username = this.userName.trim();
-        if (username.trim()) {
-            this.dispatchEvent(new CustomEvent('start-game', { detail: username }));
-        } else {
-            alert('Por favor, introduce tu nombre.');
-        }
-    }
-    render() {
-        return html`
+  }
+  render() {
+    return html`
         <div class="form">
+            <i class="fas fa-user"></i>
+            <i class="fa-solid fa-computer-mouse"></i>
             <form id="register-form" @submit="${this.handleStartGame}">
                 <label>Name</label>
                 <input type="text" .value="${this.userName}" @input="${this.handleInput}" placeholder="Enter your name" required />
@@ -69,6 +71,6 @@ class HomeView extends LitElement {
             </form >
         </div >
             `;
-    }
+  }
 }
 customElements.define('home-view', HomeView);

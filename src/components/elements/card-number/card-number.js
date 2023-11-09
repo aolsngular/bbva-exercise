@@ -3,7 +3,8 @@ import { LitElement, html, css } from 'lit';
 class CardNumber extends LitElement {
     static properties = {
         number: Number,
-        hide: Boolean
+        hide: Boolean,
+        isCorrect: Boolean
     };
     static styles = css`
         .card-number{
@@ -23,34 +24,48 @@ class CardNumber extends LitElement {
         .hide{
             background-image: url(/bbva-exercise/icons/android-chrome-72x72.png);
         }
+        .correct {
+            background-color: green; 
+        }
+        .incorrect {
+            background-color: red;
+        }
     `;
     constructor() {
         super();
         this.number = 0;
         this.hide = false;
-        setTimeout(() => this.handleNumber(), 2000);
+        this.isCorrect = null;
+        setTimeout(() => this.hideCard(), 2000);
     }
-    handleNumber() {
+    revealCard() {
         this.hide = !this.hide;
         this.requestUpdate();
         if (!this.hide) {
             if ('vibrate' in navigator) {
                 navigator.vibrate(200);
             }
-            let event = new CustomEvent('card-revealed', {
-                detail: { number: this.number },
-                bubbles: true,
-                composed: true
-            });
-            this.dispatchEvent(event);
         }
+    }
+    restartCard() {
+        this.hide = false;
+        this.isCorrect = null;
+    }
+    showCard() {
+        this.hide = false;
+        this.isCorrect = null;
+    }
+    hideCard() {
+        this.hide = true;
+        this.isCorrect = null;
+        this.requestUpdate();
     }
     render() {
         return html`
-        <div class="card-number ${this.hide ? 'hide' : ''}" @click=${this.handleNumber}>
-        ${!this.hide ? this.number : ''}
-      </div>
-    `;
+          <div class="card-number ${this.hide ? 'hide' : ''} ${this.isCorrect !== null ? (this.isCorrect ? 'correct' : 'incorrect') : ''}">
+            ${this.hide ? '' : this.number}
+          </div>
+        `;
     }
 }
 

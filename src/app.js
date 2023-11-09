@@ -13,7 +13,6 @@ class App extends LitElement {
             showGame: { type: Boolean }
         };
     }
-
     handleStartGame(username) {
         this.showGame = true;
         this.username = username;
