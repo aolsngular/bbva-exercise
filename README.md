@@ -35,7 +35,7 @@ For deploy to application in production, the first step is do push in repository
 - The 'Play' button becomes unnecessary while you are already playing, as clicking it only leads you back to the same screen. A useful feature might be to replace this with a 'Stop' button, allowing you to end the game and view your score.
   
 - Screenshot where we can see to notification for install app
-![image](https://github.com/aolsngular/bbva-exercise/assets/134691422/c09d24e5-6c78-4424-a43c-e414d4587efe)
+<img src="https://github.com/aolsngular/bbva-exercise/assets/134691422/c09d24e5-6c78-4424-a43c-e414d4587efe" alt="Screenshot notification for install app" width="300"/>
 
 Link to
 [BBVA Exercise](https://bbvaengineering.github.io/challenges/memory/)
