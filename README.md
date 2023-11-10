@@ -1,5 +1,7 @@
 # Configure and Start up application
 
+For a better experience, open the mobile app and activate your smartphone's sound.
+
 ## Step 1 - clone
 
 Sngular Antonio Olmo Repo - `git clone https://github.com/aolsngular/bbva-exercise`
