@@ -12,6 +12,7 @@ class GameView extends LitElement {
       points: { type: Number },
       startGame: { type: Boolean },
       hideCardsDuration: { type: Number },
+      cardsClickable: { type: Boolean },
     };
   }
   constructor() {
@@ -23,6 +24,7 @@ class GameView extends LitElement {
     this.startGame = false;
     this.gameMessage = 'Click the play button to start a new game';
     this.hideCardsDuration = LEVELS['low'].time;
+    this.cardsClickable = false;
     this.addEventListener('duration-change', this.updateDuration.bind(this));
 
   }
@@ -31,7 +33,11 @@ class GameView extends LitElement {
     this.gameMessage = 'Memorize the cards!';
     this.shuffle();
     this.number = Math.floor(Math.random() * 9) + 1;
-    setTimeout(() => this.hideCards(), this.hideCardsDuration);
+    this.cardsClickable = false;
+    setTimeout(() => {
+      this.hideCards();
+      this.cardsClickable = true;
+    }, this.hideCardsDuration);
   }
 
   showAllCards() {
@@ -52,6 +58,9 @@ class GameView extends LitElement {
   }
 
   cardClicked(e) {
+    if (!this.cardsClickable) {
+      return;
+    }
     const cardComponent = e.target;
     const revealedNumber = cardComponent.number;
     cardComponent.revealCard();
