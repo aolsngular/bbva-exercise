@@ -31,6 +31,9 @@ class HeaderUser extends LitElement {
             text-transform: capitalize;
             margin: 0 20px;
         }
+        .header-level{
+            margin-left: 25px;
+        }
         .header-user-icon{
             display: block;
             width: 20px; 
@@ -43,7 +46,8 @@ class HeaderUser extends LitElement {
         select{
             border: none;
             color: #fff;
-            font-size: 16px;
+            font-size: 18px;
+            text-align: center;
         }
     `;
     constructor() {
