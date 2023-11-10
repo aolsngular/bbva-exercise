@@ -136,6 +136,9 @@ var me=Object.defineProperty;var ge=(r,e,t)=>e in r?me(r,e,{enumerable:!0,config
             text-transform: capitalize;
             margin: 0 20px;
         }
+        .header-level{
+            margin-left: 25px;
+        }
         .header-user-icon{
             display: block;
             width: 20px; 
@@ -148,7 +151,8 @@ var me=Object.defineProperty;var ge=(r,e,t)=>e in r?me(r,e,{enumerable:!0,config
         select{
             border: none;
             color: #fff;
-            font-size: 16px;
+            font-size: 18px;
+            text-align: center;
         }
     `);customElements.define("header-user",ue);class pe extends g{static get properties(){return{username:{type:String},numbers:{type:Array},number:{type:Number},level:{type:String},points:{type:Number},startGame:{type:Boolean},hideCardsDuration:{type:Number},cardsClickable:{type:Boolean}}}constructor(){super(),this.numbers=[1,2,3,4,5,6,7,8,9],this.number=Math.floor(Math.random()*9)+1,this.level=H.low.type,this.points=0,this.startGame=!1,this.gameMessage="Click the play button to start a new game",this.hideCardsDuration=H.low.time,this.cardsClickable=!1,this.addEventListener("duration-change",this.updateDuration.bind(this))}startGameHandler(){this.startGame=!0,this.gameMessage="Memorize the cards!",this.shuffle(),this.number=Math.floor(Math.random()*9)+1,this.cardsClickable=!1,setTimeout(()=>{this.hideCards(),this.cardsClickable=!0},this.hideCardsDuration)}showAllCards(){this.shadowRoot.querySelectorAll("card-number").forEach(t=>{t.showCard()}),this.requestUpdate()}hideCards(){this.shadowRoot.querySelectorAll("card-number").forEach(t=>{t.hideCard()}),this.gameMessage=`Where is the number ${this.number}?`,this.requestUpdate()}cardClicked(e){if(!this.cardsClickable)return;const t=e.target,s=t.number;t.revealCard(),s===this.number?(t.isCorrect=!0,this.points+=this.generatePoint(this.level)):t.isCorrect=!1,setTimeout(()=>this.playAgain(),1500)}playAgain(){this.showAllCards(),this.startGameHandler()}generatePoint(e){return H[e].points}updateDuration(e){this.hideCardsDuration=Number(e.detail.duration),this.level=e.detail.level}shuffle(){this.numbers.sort(()=>Math.random()-.5)}handleDurationChange(e){this.hideCardsDuration=e.target.value}render(){return p`
       <header-user .userName="${this.username}" .level="${this.level}" .color="#fff"></header-user>
